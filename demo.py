@@ -26,7 +26,7 @@ class SimulationExecutor:
         good_runs = 0
         for m in range(total_nr_runs):
             finished = False
-            state, _ = self._simulator.restart()
+            state, _, _ = self._simulator.restart()
             logger.info("Start new episode.")
             recorder.start_path()
             recorder.record_state(state)
@@ -34,7 +34,7 @@ class SimulationExecutor:
                 actions = self._simulator.available_actions()
                 action = random.randint(0, len(actions) - 1)
                 logger.debug(f"Select action: {action}")
-                state, _ = self._simulator.step(action)
+                state, _, _ = self._simulator.step(action)
                 recorder.record_available_actions(actions)
                 recorder.record_allowed_actions(actions)
                 recorder.record_selected_action(action)
