@@ -165,6 +165,8 @@ class Plotter:
 
         ax = self._ax
         column_labels = list(range(0, self._maxX + 1))
+        ax.set_xlim([-0.4, self._maxX+1.4])
+        ax.set_ylim([-0.4, self._maxY+1.4])
         row_labels = list(range(0, self._maxY + 1))
         # put the major ticks at the middle of each cell
         ax.set_xticks(np.arange(self._data.shape[0]) + 0.5, minor=False)
