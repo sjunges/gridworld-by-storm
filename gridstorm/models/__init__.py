@@ -55,7 +55,10 @@ _grid_obstacle_dict = dict({'ego-xvar-module' : 'robot',
                       'target-label': 'goal',
                       'traps-label': 'traps'
                       })
-def obstacle(N):
+def obstacle(N, full_observable = False):
+    if full_observable:
+        return Model(_example_path("obstacle_full_observable.nm"), ProgramAnnotation(_grid_obstacle_dict),
+                     ["Pmax=? [ \"notbad\" U \"goal\"]"], constants=f"N={N}")
     return Model(_example_path("obstacle.nm"), ProgramAnnotation(_grid_obstacle_dict),
                  ["Pmax=? [ \"notbad\" U \"goal\"]"], constants=f"N={N}")
 
