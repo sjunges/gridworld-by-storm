@@ -86,7 +86,9 @@ def demo(model_name, constants):
 
     logger.info("Construct POMDP representation...")
     model = build_pomdp(prism_program, raw_formula)
-    model = sp.pomdp.make_canonic(model)
+    if model.is_partially_observable:
+        # TODO: Once version stormpy 1.7.1 is released, we do not need the if here.
+        model = sp.pomdp.make_canonic(model)
 
     renderer = plotter.Plotter(prism_program, input.annotations, model)
     renderer.set_title("Demo")
