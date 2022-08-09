@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 setup(
     name="gridstorm",
-    version="0.1",
+    version="0.2",
     packages=find_packages(),
     scripts=[],
     package_data={
@@ -13,9 +13,9 @@ setup(
 
     # metadata to display on PyPI
     author=["Sebastian Junges"],
-    description="This is a benchmark set visualiser for simulating grid worlds with storm.",
+    description="This is a benchmark set visualiser for simulating grid worlds with Storm.",
     keywords="gridworld storm model-checking",
     install_requires=[
-        "stormpy>=1.6.0", "matplotlib", "tqdm"
+        "stormpy>=1.7.0", "matplotlib", "tqdm"
     ],
 )
