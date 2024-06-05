@@ -22,20 +22,11 @@ formula northenabled = ax != axMIN;
 formula southenabled = ax != axMAX;
 formula westenabled = ay != ayMIN;
 formula eastenabled = ay != ayMAX;
-observable "cangonorth" = northenabled;
-observable "cangosouth" = southenabled;
-observable "cangowest" = westenabled;
-observable "cangoeast" = eastenabled;
-formula done = start & ax = axMAX & ay = ayMAX;
-observable "amdone" = done;
+formula target = start & ax = axMAX & ay = ayMAX;
 formula crash =  (ax = ob1x & ay = ob1y);
-observable "hascrash" = crash;
+formula done = target | crash;
 formula atStation = (ax = rf1x & ay = rf1y) | (ax = rf2x & ay = rf2y) |  (ax = rf3x & ay = rf3y);
 formula canRefuel = atStation  & fuel < fuelCAP;
-observable "refuelAllowed" = canRefuel;
-observable "fuelempty" = fuel > 0;
-observable "fuelfull" = fuel = ENERGY;
-observable "fuelmeter" = floor(fuel/(ENERGY/RESOLUTION));
 
 module master
     start : bool init false;
@@ -88,10 +79,10 @@ rewards "costs"
     [south] true : 1;
     [west] true : 1;
     [east] true : 1;
-    [refuel] true : 3;
+    [refuel] true : 12;
 endrewards
 
-label "goal" = done;
+label "goal" = target;
 label "traps" = crash;
 label "stationvisit" = atStation;
 label "notbad" =  !crash & (fuel > 0 | canRefuel);
