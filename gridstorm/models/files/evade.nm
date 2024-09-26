@@ -72,3 +72,17 @@ endmodule
 label "goal" = done;
 label "traps" = crash;
 label "notbad" =  !crash;
+
+rewards "costs"
+    [north] true : 0.01;
+    [south] true : 0.01;
+    [west] true : 0.01;
+    [east] true : 0.01;
+    [scan] true : 0.01;
+    crash = true:00; 
+endrewards
+
+rewards "gains"
+    [placement] true:11.75;
+    done=true:10;
+endrewards

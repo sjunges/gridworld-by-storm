@@ -83,6 +83,17 @@ endmodule
 
 module agent2=agent[ax=ax2,ay=ay2,dir=dir2,ayPOS=ay2POS] endmodule
 
+rewards "costs"
+    [north] true : 1;
+    [south] true : 1;
+    [west] true : 1;
+    [east] true : 1;
+endrewards
+
+rewards "gains"
+    done=true : 100;
+endrewards
+
 
 label "goal" = done;
 label "traps" = crash;

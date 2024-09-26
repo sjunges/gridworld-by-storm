@@ -37,7 +37,7 @@ observable "hascrash" = crash;
 formula atStation = (ax = rf1x & ay = rf1y) | (ax = rf2x & ay = rf2y) |  (ax = rf3x & ay = rf3y);
 formula canRefuel = atStation  & fuel < fuelCAP;
 observable "refuelAllowed" = canRefuel;
-observable "fuelempty" = fuel > 0;
+observable "fuelempty" = fuel = 0;
 observable "fuelfull" = fuel = ENERGY;
 observable "fuelmeter" = floor(fuel/(ENERGY/RESOLUTION));
 
@@ -76,6 +76,20 @@ module rover
     [north]  westenabled -> (1-slippery): (ay'=max(ay-1,ayMIN)) + slippery: (ay'=max(ay-2,ayMIN));
 endmodule
 
+rewards "costs"
+    [north] true : 0;
+    [south] true : 0;
+    [west] true : 0;
+    [east] true : 0;
+    [refuel] true : 0;
+    [empty] true : 0; 
+endrewards
+
+rewards "gains"
+    done=true : 10;
+endrewards
+
+
 rewards "steps"
     [north] true : 1;
     [south] true : 1;
@@ -87,13 +101,6 @@ rewards "refuels"
     [refuel] true : 1;
 endrewards
 
-rewards "costs"
-    [north] true : 1;
-    [south] true : 1;
-    [west] true : 1;
-    [east] true : 1;
-    [refuel] true : 3;
-endrewards
 
 label "goal" = done;
 label "traps" = crash;
