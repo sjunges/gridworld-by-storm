@@ -522,7 +522,7 @@ class Plotter:
                                 verticalalignment='top', bbox=props)
             self._tmp_objects.append(txt)
 
-        ax.pcolor(self._data, cmap=colors, edgecolors='k', linestyle= 'dashed', linewidths=0.2, vmin=0, vmax=7)
+        ax.pcolor(self._data, cmap=colors, edgecolors='k', linestyle= 'dashed', linewidths=0.2, vmin=0, vmax=7, zorder=-100)
 
         logger.debug("done rendering")
         if show:
