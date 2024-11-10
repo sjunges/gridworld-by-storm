@@ -4,7 +4,7 @@ is a small project that investigates how POMDP analysis results in storm can be 
 For that, the project currently contains 
 - a series of gridworlds, and 
 - a renderer to render traces in these gridworlds.
-- a demo.py demonstrating how to generate and render traces
+- a demo.py demonstrating how to generate and render traces.
 
 For more advanced usage, we can refer to the [rlshield](https://github.com/sjunges/shield-in-action) project that builds on top of this project. 
 
@@ -12,6 +12,11 @@ For more advanced usage, we can refer to the [rlshield](https://github.com/sjung
 
 - Ensure FFMPeg is available on your system.
 - Ensure Stormpy 1.7.0 is available on your system.
+
+# Demo application
+
+ Generates demo-0.mp4 or demo-0.gif. 
+ No command line arguments are currently supported.
 
 # Gridworlds
 

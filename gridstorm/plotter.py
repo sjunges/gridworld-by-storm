@@ -9,6 +9,8 @@ import numpy as np
 import matplotlib.patches as patches
 import matplotlib.animation
 import matplotlib.image
+#TODO this is a bit of a hack. A more elaborate way of knowing the imagemagick path is probably worthwhile.
+plt.rcParams['animation.convert_path'] = 'magick'
 from matplotlib.offsetbox import TextArea, DrawingArea, OffsetImage, AnnotationBbox
 
 
@@ -252,14 +254,14 @@ class Plotter:
                       verticalalignment='top', bbox=props)
         self._tmp_objects.append(txt)
 
-    def _set_ego(self, ax, xloc, yloc, radius):
+    def _set_ego(self, xloc, yloc, radius):
         # Create a Rectangle patch
         if self._ego_image:
             ego = AnnotationBbox(self._ego_image, (xloc+0.5, yloc+0.5))
-            ax.add_artist(ego)
+            self._ax.add_artist(ego)
         else:
             ego = patches.Rectangle((xloc+0.25, yloc+0.25), 0.5, 0.5, linewidth=1, edgecolor='b', facecolor='b')
-            ax.add_patch(ego)
+            self._ax.add_patch(ego)
 
         if radius:
             viewarea_xlb = max(0, xloc - radius)
@@ -278,13 +280,12 @@ class Plotter:
                 verticalalignment='top', bbox=props)
         self._tmp_objects.append(txt)
 
-        # Add the patch to the Axes
 
     def _set_resources(self, relative_height):
         bar = self._ax_res.bar(0, relative_height * 1, width=1, color='black', bottom=0, align='center', data=None)
         self._tmp_objects.append(bar)
 
-    def _set_ego_alternatives(self, ax, xloc, yloc):
+    def _set_ego_alternatives(self, xloc, yloc):
         self._data[yloc,xloc] = data_colors["EGOBELIEF"]
 
     def _set_adv_alternatives(self, xloc, yloc):
@@ -458,7 +459,6 @@ class Plotter:
     def render(self, snapshot, show_frame_count=None, show=False):
         logger.debug("start rendering")
         self._clear()
-        ax = self._ax
         ego_xloc, ego_yloc = self._get_ego_loc(snapshot.state)
         ego_radius = self._get_ego_radius()
 
@@ -467,13 +467,13 @@ class Plotter:
             self._ego_scanned_last_round = True
         else:
             self._ego_scanned_last_round = False
-        self._set_ego(ax, ego_xloc, ego_yloc, ego_radius)
+        self._set_ego(ego_xloc, ego_yloc, ego_radius)
 
         # only for belief support traces
         if hasattr(snapshot, 'potential_states'):
             for bstate in snapshot.potential_states:
                 ego_xloc_alt, ego_yloc_alt = self._get_ego_loc(bstate)
-                self._set_ego_alternatives(ax, ego_xloc_alt, ego_yloc_alt)
+                self._set_ego_alternatives(ego_xloc_alt, ego_yloc_alt)
 
         # allow to always see an area
         for cameraindex in range(self._annotation.nr_cameras):
@@ -522,7 +522,7 @@ class Plotter:
                                 verticalalignment='top', bbox=props)
             self._tmp_objects.append(txt)
 
-        ax.pcolor(self._data, cmap=colors, edgecolors='k', linestyle= 'dashed', linewidths=0.2, vmin=0, vmax=7, zorder=-100)
+        self._ax.pcolor(self._data, cmap=colors, edgecolors='k', linestyle= 'dashed', linewidths=0.2, vmin=0, vmax=7, zorder=-100)
 
         logger.debug("done rendering")
         if show:

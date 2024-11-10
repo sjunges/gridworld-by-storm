@@ -54,6 +54,7 @@ class SimulationExecutor:
                 break
         return result
 
+
 def build_pomdp(program, formula):
     options = sp.BuilderOptions([formula])
     options.set_build_state_valuations()
@@ -72,7 +73,14 @@ experiment_to_grid_model_names = {
     'rocks': models.rocks
 }
 
-def demo(model_name, constants):
+def demo(model_name, constants, gif):
+    """
+    Demonstrates how to use the library.
+
+    :param model_name: Name of the model, must be one of the experiment_to_grid_model_names.
+    :param constants: Dictionary of constant values that matches the model description
+    :param gif: Render a gif or an MP4.
+    """
     logging.basicConfig(filename='demo.log', level=logging.DEBUG)
     model = experiment_to_grid_model_names[model_name]
     constants = dict(item.split('=') for item in constants.split(","))
@@ -95,10 +103,10 @@ def demo(model_name, constants):
     recorder = gridstorm.recorder.VideoRecorder(renderer, False)
     executor = SimulationExecutor(model, seed=42)
     executor.simulate(recorder)
-    recorder.save(".", "demo")
-    
+    recorder.save(".", "demo", gif=gif)
+
 if __name__ == "__main__":
-    demo("evade", "N=6,RADIUS=2")
+    demo("evade", "N=6,RADIUS=2", gif=False)
 
 
 
