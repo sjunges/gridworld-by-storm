@@ -12,6 +12,7 @@ For more advanced usage, we can refer to the [rlshield](https://github.com/sjung
 
 - Ensure FFMPeg is available on your system.
 - Ensure Stormpy 1.7.0 is available on your system.
+- Optional: Support for creating GIFs depends on ImageMagick currently
 
 # Gridworlds
 
